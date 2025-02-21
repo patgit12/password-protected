@@ -47,6 +47,28 @@
     <script>
         function checkPassword() {
             const password = document.getElementById("password").value;
+        
+            fetch("https://password-checker-ci01.onrender.com/check-password", { // Replace with your actual Render URL
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.url; // Redirect to secure link
+                } else {
+                    document.getElementById("error").style.display = "block";
+                }
+            })
+            .catch(error => console.error("Error:", error));
+}
+
+        <!--
+        function checkPassword() {
+            const password = document.getElementById("password").value;
             const correctPassword = "${{secrets.PASSWORD}}"; // Change this password
             const googleDriveLink = "${{secrets.WEBSITE}}"; // Replace with your actual link
 
@@ -56,6 +78,7 @@
                 document.getElementById("error").style.display = "block";
             }
         }
+        -->
     </script>
 
 </body>
